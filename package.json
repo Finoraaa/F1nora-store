@@ -16,7 +16,7 @@
     "build:android": "npm run cap:sync && cd android && ./gradlew assembleDebug && cd ..",
     "build:linux": "vite build && electron-builder --linux AppImage deb",
     "build:win": "vite build && electron-builder --win nsis zip",
-    "build:mac": "vite build && electron-builder --mac dmg"
+    "build:mac": "vite build && electron-builder --mac -c.mac.identity=null"
   },
   "build": {
     "appId": "com.finora.store",
@@ -49,7 +49,8 @@
     },
     "mac": {
       "target": [
-        "dmg"
+        "dmg",
+        "zip"
       ],
       "category": "public.app-category.utilities",
       "icon": "public/logo.png"
