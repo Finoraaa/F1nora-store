@@ -5,8 +5,8 @@
 <h1 align="center">🐺 Finora's Store</h1>
 
 <p align="center">
-  <strong>Bağımsız, Sansürsüz ve Özgür Açık Kaynak Uygulama Dağıtım Merkezi</strong><br>
-  Play Store'un 25$ harçlarına ve F-Droid'in hantal onay kurallarına takılmadan; Finoraaa uygulamalarını doğrudan resmi GitHub Releases üzerinden Windows, Android, Linux ve macOS için tek tıkla indiren bağımsız mağaza.
+  <strong>Tüm Platformlar İçin Açık Kaynak Uygulama Dağıtım Merkezi</strong><br>
+  Finora projelerini ve açık kaynak uygulamaları resmi GitHub Releases üzerinden Windows, Android, Linux ve macOS için tek tıkla cihazınıza ulaştıran modern mağaza.
 </p>
 
 <p align="center">
