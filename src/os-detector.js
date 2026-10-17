@@ -76,6 +76,11 @@ export function detectUserOS() {
 export function classifyAsset(filename) {
   const name = filename.toLowerCase();
 
+  // Internal updater & checksum files to ignore
+  if (name.endsWith('.blockmap') || name.endsWith('.yml') || name.endsWith('.yaml') || name.endsWith('.sha256') || name.endsWith('.sig')) {
+    return { os: 'ignore', format: 'META', arch: 'None', label: filename, isInternal: true };
+  }
+
   // Android
   if (name.endsWith('.apk') || name.endsWith('.aab')) {
     let arch = 'Universal';

@@ -477,6 +477,7 @@ function renderModalAssets(app) {
 
   assets.forEach(asset => {
     const meta = classifyAsset(asset.name);
+    if (meta.os === 'ignore' || meta.isInternal) return;
     if (groups[meta.os]) {
       groups[meta.os].items.push({ asset, meta });
     } else {
