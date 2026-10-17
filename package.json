@@ -3,19 +3,26 @@
   "private": true,
   "version": "1.0.0",
   "description": "Finora's Store - Cross-Platform Open Source App Store powered by GitHub Releases",
-  "main": "electron/main.js",
+  "main": "electron/main.cjs",
+  "author": "Finoraaa <Finoraaa@users.noreply.github.com>",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "build:linux": "vite build && npx electron-builder --linux deb AppImage",
-    "build:win": "vite build && npx electron-builder --win nsis zip",
-    "build:mac": "vite build && npx electron-builder --mac dmg"
+    "start": "vite build && electron .",
+    "cap:sync": "vite build && npx cap sync android",
+    "build:android": "npm run cap:sync && cd android && ./gradlew assembleDebug && cd ..",
+    "build:linux": "vite build && electron-builder --linux AppImage deb",
+    "build:win": "vite build && electron-builder --win nsis zip",
+    "build:mac": "vite build && electron-builder --mac dmg"
   },
   "build": {
     "appId": "com.finora.store",
-    "productName": "Finora's Store",
+    "productName": "Finoras Store",
+    "executableName": "finoras-store",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "directories": {
       "output": "release"
     },
@@ -25,6 +32,7 @@
       "public/**/*"
     ],
     "linux": {
+      "maintainer": "Finoraaa <Finoraaa@users.noreply.github.com>",
       "target": [
         "deb",
         "AppImage"
@@ -48,9 +56,14 @@
     }
   },
   "dependencies": {
+    "@capacitor/core": "^8.5.3",
     "marked": "^15.0.7"
   },
   "devDependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/cli": "^8.5.3",
+    "electron": "^44.9.0",
+    "electron-builder": "^26.15.3",
     "vite": "^6.2.0"
   }
 }

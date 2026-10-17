@@ -6,7 +6,21 @@ node_modules/
 # Build outputs
 dist/
 release/
+release-assets/
+dist-apk/
+android-dist/
+release-all/
+release-final/
 *.local
+
+# Android build outputs
+.gradle/
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+*.apk
+*.aab
 
 # Environment
 .env
