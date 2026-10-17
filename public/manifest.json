@@ -1,0 +1,17 @@
+{
+  "name": "Finora's Store",
+  "short_name": "FinoraStore",
+  "description": "Universal Open-Source App Store powered by GitHub Releases for Windows, Android, Linux, macOS and iOS",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "icons": [
+    {
+      "src": "./logo.png",
+      "sizes": "460x460",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finora's Store — Universal Open-Source App Store</title>
+  <meta name="description" content="GitHub Releases üzerinden Windows (.exe), Android (.apk), Linux (.deb/.AppImage), macOS (.dmg) ve iOS için tek tıkla açık kaynak uygulama indirme mağazası.">
+  <link rel="icon" type="image/png" href="./logo.png">
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#09090b">
+  <!-- Google Fonts: Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body class="theme-dark">
+  <!-- Top Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-brand" id="nav-brand-btn">
+        <div class="logo-wrapper">
+          <img src="./logo.png" alt="Finora Wolf Logo" class="brand-logo" id="main-brand-logo">
+          <span class="logo-glow"></span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Finora's Store</span>
+          <span class="brand-badge">GitHub Sync</span>
+        </div>
+      </div>
+
+      <!-- Center: Search & OS Pills -->
+      <div class="nav-center">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <input type="text" id="global-search-input" placeholder="Uygulama, VPN, araç ara... (Ctrl + K)" autocomplete="off">
+          <button class="clear-search-btn" id="clear-search-btn" title="Temizle" style="display: none;">&times;</button>
+          <kbd class="search-shortcut">/</kbd>
+        </div>
+      </div>
+
+      <!-- Right: Action Buttons -->
+      <div class="nav-actions">
+        <button class="btn btn-primary" id="btn-open-add-app" title="Yeni GitHub Deposu Ekle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Uygulama Ekle</span>
+        </button>
+
+        <button class="btn btn-secondary icon-btn" id="btn-open-downloads" title="İndirilenler Geçmişi">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span class="downloads-badge" id="downloads-badge" style="display:none;">0</span>
+        </button>
+
+        <button class="btn btn-secondary icon-btn" id="btn-open-settings" title="Ayarlar & GitHub Token">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+
+        <a href="https://github.com/Finoraaa/f1nora-store" target="_blank" rel="noopener noreferrer" class="btn btn-ghost icon-btn" title="GitHub Deposu">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="btn-icon">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- OS Filter Pills Sub-nav -->
+    <div class="os-pills-bar">
+      <div class="os-pills-container" id="os-filter-container">
+        <button class="os-pill active" data-os="all">
+          <span class="os-pill-icon">🌐</span>
+          <span>Tüm Sistemler</span>
+        </button>
+        <button class="os-pill" data-os="windows">
+          <span class="os-pill-icon">🪟</span>
+          <span>Windows (.exe / .msi)</span>
+        </button>
+        <button class="os-pill" data-os="android">
+          <span class="os-pill-icon">🤖</span>
+          <span>Android (.apk)</span>
+        </button>
+        <button class="os-pill" data-os="linux">
+          <span class="os-pill-icon">🐧</span>
+          <span>Linux (Debian / AppImage)</span>
+        </button>
+        <button class="os-pill" data-os="macos">
+          <span class="os-pill-icon">🍎</span>
+          <span>macOS (.dmg)</span>
+        </button>
+        <button class="os-pill" data-os="ios">
+          <span class="os-pill-icon">📱</span>
+          <span>iOS (.ipa)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section with Wolf Branding -->
+  <section class="hero-section">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-wolf-badge">
+        <img src="./logo.png" alt="Finora Wolf" class="hero-wolf-img">
+        <div class="wolf-status-ring"></div>
+      </div>
+      <div class="hero-info">
+        <div class="hero-badge-tag">
+          <span class="pulse-dot"></span>
+          <span>Finora Ecosystem • GitHub Releases Direct Hub</span>
+        </div>
+        <h1 class="hero-title">
+          Tüm İşletim Sistemleri İçin <br>
+          <span class="text-gradient">Doğrudan Uygulama Mağazası</span>
+        </h1>
+        <p class="hero-desc">
+          Windows, Android, Debian/Linux, macOS ve iOS için resmi GitHub sürümlerinden en güncel <code>.apk</code>, <code>.exe</code>, <code>.deb</code>, <code>.AppImage</code> ve <code>.dmg</code> dosyalarını tek tıkla güvenle indirin.
+        </p>
+
+        <!-- Dynamic OS Detector Alert Box -->
+        <div class="detected-os-card" id="detected-os-banner">
+          <div class="os-detect-left">
+            <span class="os-detect-icon" id="os-banner-icon">💻</span>
+            <div>
+              <div class="os-detect-title">
+                Sisteminiz Tespit Edildi: <span class="highlight-os" id="os-banner-name">Linux</span>
+              </div>
+              <div class="os-detect-sub" id="os-banner-sub">
+                Sizin sisteminiz için uygun olan paketler kartlarda otomatik vurgulanır.
+              </div>
+            </div>
+          </div>
+          <div class="os-detect-right">
+            <span class="badge badge-accent" id="os-banner-badge">Linux (.deb / .AppImage)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats Bar -->
+    <div class="hero-stats">
+      <div class="stat-card">
+        <span class="stat-num" id="stat-apps-count">10+</span>
+        <span class="stat-label">Popüler Uygulama</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-card">
+        <span class="stat-num">5 Platform</span>
+        <span class="stat-label">Win • Android • Linux • Mac • iOS</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-card">
+        <span class="stat-num">GitHub CDN</span>
+        <span class="stat-label">Doğrudan & Aracısız İndirme</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-card">
+        <span class="stat-num" id="stat-api-status">Canlı</span>
+        <span class="stat-label">Releases Otomatik Kontrol</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Store Catalog Section -->
+  <main class="store-section">
+    <!-- Controls Bar -->
+    <div class="store-controls-wrapper">
+      <!-- Category Pills -->
+      <div class="category-tabs" id="category-tabs">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- Filter & Sort Sub-bar -->
+      <div class="controls-subbar">
+        <div class="results-count" id="results-count">
+          Yükleniyor...
+        </div>
+
+        <div class="controls-right">
+          <div class="select-wrapper">
+            <label for="sort-select" class="visually-hidden">Sırala</label>
+            <select id="sort-select" class="select-input">
+              <option value="featured">✨ Öne Çıkanlar</option>
+              <option value="stars">⭐ En Çok Yıldız Alanlar</option>
+              <option value="updated">🕒 En Son Güncellenen</option>
+              <option value="name">🔤 İsim (A-Z)</option>
+            </select>
+          </div>
+
+          <button class="btn btn-secondary btn-sm" id="btn-refresh-catalog" title="Sürümleri Yenile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span>Yenile</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apps Grid -->
+    <div class="apps-grid" id="apps-grid">
+      <!-- Skeleton Loading Cards -->
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="empty-state" style="display: none;">
+      <div class="empty-icon">🔍</div>
+      <h3 class="empty-title">Eşleşen Uygulama Bulunamadı</h3>
+      <p class="empty-desc">Farklı bir arama terimi deneyin ya da GitHub'dan istediğiniz herhangi bir uygulamayı doğrudan ekleyin.</p>
+      <button class="btn btn-primary" id="btn-empty-add-app">
+        <span>+ GitHub'dan Uygulama Ekle</span>
+      </button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="store-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="./logo.png" alt="Wolf Logo" class="footer-logo">
+        <div>
+          <div class="footer-title">Finora's Store</div>
+          <div class="footer-sub">Açık Kaynak & Bağımsız Uygulama Dağıtım Ekosistemi</div>
+        </div>
+      </div>
+      <div class="footer-right">
+        <span>GitHub Actions ile sürekli derlenir ve dağıtılır.</span>
+        <a href="https://github.com/Finoraaa/f1nora-store" target="_blank" class="footer-link">GitHub Deposu</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL: App Details & Multi-Platform Downloads -->
+  <div class="modal-overlay" id="app-modal" style="display: none;">
+    <div class="modal-card modal-large" id="app-modal-card">
+      <button class="modal-close-btn" id="btn-close-app-modal">&times;</button>
+      
+      <div class="modal-app-header">
+        <img src="./logo.png" alt="App Logo" class="modal-app-icon" id="modal-app-icon">
+        <div class="modal-app-info">
+          <div class="modal-app-title-row">
+            <h2 class="modal-app-title" id="modal-app-title">Uygulama Adı</h2>
+            <span class="badge badge-accent" id="modal-app-tag">v1.0.0</span>
+            <span class="badge" id="modal-app-stars">⭐ 0</span>
+          </div>
+          <p class="modal-app-desc" id="modal-app-desc">Uygulama açıklaması</p>
+          <div class="modal-app-meta">
+            <span class="meta-item">
+              <span class="meta-label">Geliştirici:</span>
+              <a href="#" target="_blank" id="modal-app-author-link" class="meta-link">Geliştirici</a>
+            </span>
+            <span class="meta-item">
+              <span class="meta-label">Yayın Tarihi:</span>
+              <span id="modal-app-date">-</span>
+            </span>
+            <span class="meta-item">
+              <span class="meta-label">Toplam İndirme:</span>
+              <span id="modal-app-downloads">-</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Tabs -->
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-tab="downloads">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="tab-icon">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>İndirme Paketleri (Tüm İşletim Sistemleri)</span>
+        </button>
+        <button class="modal-tab" data-tab="changelog">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="tab-icon">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>Sürüm Notları (Changelog)</span>
+        </button>
+      </div>
+
+      <!-- Tab Content: Downloads -->
+      <div class="modal-tab-content active" id="tab-content-downloads">
+        <div class="assets-grouped-container" id="modal-assets-grouped">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Tab Content: Changelog -->
+      <div class="modal-tab-content" id="tab-content-changelog">
+        <div class="changelog-markdown-body" id="modal-changelog-body">
+          Sürüm notları yükleniyor...
+        </div>
+      </div>
+
+      <!-- Modal Bottom Actions -->
+      <div class="modal-footer">
+        <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="modal-btn-view-github">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="btn-icon">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span>GitHub'da İncele</span>
+        </a>
+        <button class="btn btn-primary" id="modal-btn-quick-download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span id="modal-btn-download-text">Önerilen Paketi İndir</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Add Custom GitHub App -->
+  <div class="modal-overlay" id="add-app-modal" style="display: none;">
+    <div class="modal-card" id="add-app-card">
+      <button class="modal-close-btn" id="btn-close-add-modal">&times;</button>
+      <div class="modal-header">
+        <div class="modal-icon-badge">➕</div>
+        <div>
+          <h2 class="modal-title">GitHub'dan Uygulama Ekle</h2>
+          <p class="modal-subtitle">İstediğiniz açık kaynak bir projenin releases paketlerini mağazanıza aktarın.</p>
+        </div>
+      </div>
+
+      <form id="add-app-form">
+        <div class="form-group">
+          <label for="input-repo-url">GitHub Depo Bağlantısı veya Adı</label>
+          <div class="input-with-icon">
+            <span class="input-prefix">github.com/</span>
+            <input type="text" id="input-repo-url" placeholder="kullanıcı/depo (örn: SagerNet/sing-box)" required>
+          </div>
+          <small class="form-help">Örnekler: <code>MatsuriDayo/nekoray</code>, <code>https://github.com/hiddify/hiddify-next</code></small>
+        </div>
+
+        <div class="form-group">
+          <label for="select-app-category">Kategori</label>
+          <select id="select-app-category" class="select-input">
+            <option value="VPN & Gizlilik">VPN & Gizlilik</option>
+            <option value="Web Tarayıcılar">Web Tarayıcılar</option>
+            <option value="Araçlar & Yardımcılar">Araçlar & Yardımcılar</option>
+            <option value="Geliştirici Araçları">Geliştirici Araçları</option>
+            <option value="Medya & Müzik">Medya & Müzik</option>
+            <option value="Özel Eklenenler" selected>Özel Eklenenler</option>
+          </select>
+        </div>
+
+        <!-- Preview Card if loaded -->
+        <div id="add-app-preview" class="repo-preview-box" style="display: none;">
+          <div class="preview-header">
+            <img id="preview-icon" src="./logo.png" class="preview-avatar" alt="Avatar">
+            <div>
+              <div class="preview-name" id="preview-name">Depo Adı</div>
+              <div class="preview-desc" id="preview-desc">Açıklama</div>
+            </div>
+          </div>
+          <div class="preview-tags" id="preview-tags">
+            <!-- Badges -->
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" id="btn-verify-repo">
+            <span>Kontrol Et</span>
+          </button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-add-app">
+            <span>Mağazaya Ekle</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Downloads History -->
+  <div class="modal-overlay" id="downloads-modal" style="display: none;">
+    <div class="modal-card" id="downloads-card">
+      <button class="modal-close-btn" id="btn-close-downloads-modal">&times;</button>
+      <div class="modal-header">
+        <div class="modal-icon-badge">📥</div>
+        <div>
+          <h2 class="modal-title">İndirilenler Geçmişi</h2>
+          <p class="modal-subtitle">Bu tarayıcı oturumunda indirilen dosyalar ve doğrudan bağlantıları.</p>
+        </div>
+      </div>
+
+      <div class="downloads-list" id="downloads-list">
+        <!-- Populated via JS -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="btn-clear-downloads">Geçmişi Temizle</button>
+        <button class="btn btn-secondary" id="btn-close-downloads-done">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Settings -->
+  <div class="modal-overlay" id="settings-modal" style="display: none;">
+    <div class="modal-card" id="settings-card">
+      <button class="modal-close-btn" id="btn-close-settings-modal">&times;</button>
+      <div class="modal-header">
+        <div class="modal-icon-badge">⚙️</div>
+        <div>
+          <h2 class="modal-title">Mağaza Ayarları</h2>
+          <p class="modal-subtitle">GitHub API limitleri ve sistem tercihleri</p>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <label for="input-gh-token" class="settings-label">
+          GitHub Personal Access Token (İsteğe Bağlı)
+        </label>
+        <p class="settings-help">
+          GitHub ücretsiz istek limiti saatte 60 adettir. Kendi kişisel erişim jetonunuzu (PAT) eklerseniz limit <strong>5.000 istek/saat</strong>'e yükselir. Jetonunuz yalnızca tarayıcınızın yerel hafızasında saklanır.
+        </p>
+        <div class="input-with-icon">
+          <input type="password" id="input-gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <label for="select-os-override" class="settings-label">
+          Manuel İşletim Sistemi Seçimi (Simülasyon)
+        </label>
+        <p class="settings-help">
+          Otomatik tespit edilen sistem yerine mağazayı başka bir işletim sistemindeymiş gibi görüntülemek isterseniz buradan seçebilirsiniz.
+        </p>
+        <select id="select-os-override" class="select-input">
+          <option value="auto">🌐 Otomatik Tespit (Tavsiye Edilen)</option>
+          <option value="windows">🪟 Windows (.exe / .msi)</option>
+          <option value="android">🤖 Android (.apk)</option>
+          <option value="linux">🐧 Linux (Debian .deb / AppImage)</option>
+          <option value="macos">🍎 macOS (.dmg)</option>
+          <option value="ios">📱 iOS (.ipa)</option>
+        </select>
+      </div>
+
+      <div class="settings-section danger-section">
+        <label class="settings-label text-danger">Mağaza Verilerini Sıfırla</label>
+        <p class="settings-help">Özel eklediğiniz uygulamaları siler ve varsayılan listeye döner.</p>
+        <button class="btn btn-danger btn-sm" id="btn-reset-store">Varsayılana Sıfırla</button>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="btn-save-settings">Kaydet ve Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Confetti Canvas for Celebratory Downloads -->
+  <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

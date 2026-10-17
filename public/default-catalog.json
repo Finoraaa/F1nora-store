@@ -1,0 +1,112 @@
+[
+  {
+    "id": "hiddify-next",
+    "name": "Hiddify Next",
+    "owner": "hiddify",
+    "repo": "hiddify-next",
+    "tagline": "Multi-platform auto-proxy VPN client with Clash & Sing-box core",
+    "category": "VPN & Privacy",
+    "icon": "https://raw.githubusercontent.com/hiddify/hiddify-next/main/assets/images/logo.png",
+    "featured": true,
+    "platforms": ["windows", "android", "linux", "macos", "ios"]
+  },
+  {
+    "id": "flclash",
+    "name": "FlClash",
+    "owner": "FlClash",
+    "repo": "FlClash",
+    "tagline": "Multi-platform proxy client based on ClashMeta with modern GUI",
+    "category": "VPN & Privacy",
+    "icon": "https://raw.githubusercontent.com/FlClash/FlClash/main/assets/images/icon.png",
+    "featured": true,
+    "platforms": ["windows", "android", "linux", "macos"]
+  },
+  {
+    "id": "nekoray",
+    "name": "NekoRay",
+    "owner": "MatsuriDayo",
+    "repo": "nekoray",
+    "tagline": "Qt-based cross-platform GUI proxy client for Xray and Sing-box",
+    "category": "VPN & Privacy",
+    "icon": "https://avatars.githubusercontent.com/u/84687550?s=200&v=4",
+    "featured": false,
+    "platforms": ["windows", "linux"]
+  },
+  {
+    "id": "sing-box",
+    "name": "Sing-Box",
+    "owner": "SagerNet",
+    "repo": "sing-box",
+    "tagline": "The universal proxy platform with lightning performance",
+    "category": "VPN & Privacy",
+    "icon": "https://avatars.githubusercontent.com/u/81711202?s=200&v=4",
+    "featured": false,
+    "platforms": ["windows", "android", "linux", "macos"]
+  },
+  {
+    "id": "localsend",
+    "name": "LocalSend",
+    "owner": "localsend",
+    "repo": "localsend",
+    "tagline": "Share files to nearby devices over Wi-Fi (AirDrop alternative for all OS)",
+    "category": "Utilities",
+    "icon": "https://raw.githubusercontent.com/localsend/localsend/main/assets/img/logo-512.png",
+    "featured": true,
+    "platforms": ["windows", "android", "linux", "macos", "ios"]
+  },
+  {
+    "id": "rustdesk",
+    "name": "RustDesk",
+    "owner": "rustdesk",
+    "repo": "rustdesk",
+    "tagline": "Open source virtual / remote desktop infrastructure written in Rust",
+    "category": "Utilities",
+    "icon": "https://raw.githubusercontent.com/rustdesk/rustdesk/master/res/icon.png",
+    "featured": true,
+    "platforms": ["windows", "android", "linux", "macos"]
+  },
+  {
+    "id": "zen-browser",
+    "name": "Zen Browser",
+    "owner": "zen-browser",
+    "repo": "desktop",
+    "tagline": "Beautiful, fast, privacy-focused Firefox-based browser with workspaces",
+    "category": "Browsers",
+    "icon": "https://avatars.githubusercontent.com/u/174415842?s=200&v=4",
+    "featured": true,
+    "platforms": ["windows", "linux", "macos"]
+  },
+  {
+    "id": "obsidian",
+    "name": "Obsidian",
+    "owner": "obsidianmd",
+    "repo": "obsidian-releases",
+    "tagline": "A powerful and extensible knowledge base on top of local Markdown files",
+    "category": "Productivity",
+    "icon": "https://avatars.githubusercontent.com/u/65011256?s=200&v=4",
+    "featured": false,
+    "platforms": ["windows", "android", "linux", "macos"]
+  },
+  {
+    "id": "vscodium",
+    "name": "VSCodium",
+    "owner": "VSCodium",
+    "repo": "vscodium",
+    "tagline": "Community-driven, freely-licensed binary distribution of VS Code",
+    "category": "Development",
+    "icon": "https://raw.githubusercontent.com/VSCodium/vscodium/master/icons/stable/512.png",
+    "featured": false,
+    "platforms": ["windows", "linux", "macos"]
+  },
+  {
+    "id": "kavita",
+    "name": "Kavita",
+    "owner": "Kareadita",
+    "repo": "Kavita",
+    "tagline": "Fast, feature-rich self-hosted digital library for Manga, Comics, and Books",
+    "category": "Media",
+    "icon": "https://avatars.githubusercontent.com/u/74640103?s=200&v=4",
+    "featured": false,
+    "platforms": ["windows", "linux", "macos", "android"]
+  }
+]
